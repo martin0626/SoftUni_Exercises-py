@@ -1,0 +1,24 @@
+{% extends 'block/header.html' %}
+
+
+{% block body %}
+    <h1 class="text-center">Create Python</h1>
+    <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="custom-file">
+            {{ form.image }}
+        </div>
+        <input type="submit" value="Create" class="btn btn-primary">
+    </form>
+    <div class="card-footer navbar-dark bg-dark footer fixed-bottom text-center">
+      <small class="text-light text-center">Templates Advanced Exercise @SoftUni</small>
+    </div>
+{% endblock %}

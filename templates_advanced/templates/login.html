@@ -1,0 +1,10 @@
+{% extends 'block/header.html' %}
+
+
+{% block body %}
+    <form class="col-lg-6 offset-lg-3" method="post">
+        {% csrf_token %}
+         {{ form }}
+        <button>Login</button>
+    </form>
+{% endblock %}

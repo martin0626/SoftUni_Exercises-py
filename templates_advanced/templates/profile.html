@@ -1,0 +1,10 @@
+{% extends 'block/header.html' %}
+
+
+{% block body %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button>Save</button>
+    </form>
+{% endblock %}
