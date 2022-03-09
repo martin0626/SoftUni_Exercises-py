@@ -1,0 +1,94 @@
+{% extends 'Base/Navigation.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="{% static 'css/counter.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="container">
+            <h1 class="text-center text-black mt-5">Create TODO!</h1>
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6 text-black">
+                    <form method="post" action="{% url 'my todos' %}">
+                        {% csrf_token %}
+                        {{ form }}
+                        <div class="text-center">
+                            <button class="btn btn-primary mt-2">Create Todo</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+
+
+        {#    Counter-----------------------------------------------------------------#}
+        <div class="container" style="margin-left: 420px">
+            <div class="row text-center">
+                <div class="four col-md-3">
+                    <div class="counter-box colored"><i class="fa fa-thumbs-o-up"></i> <span
+                            class="counter">{{ done_count }}</span>
+                        <p>Completed</p>
+                    </div>
+                </div>
+                <div class="four col-md-3">
+                    <div class="counter-box bg-warning"><i class="fa fa-group"></i> <span
+                            class="counter">{{ waiting_count }}</span>
+                        <p>Waiting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#TODOS LIST----------------------------------------------------------------------------------#}
+
+        {% if todos %}
+            {% for todo in todos %}
+                <div class="container text-center mt-5 mb-5">
+                <div class="card">
+                    {% if todo.is_done %}
+                        <h5 class="card-header bg-success">Done</h5>
+                    {% else %}
+                        <h5 class="card-header bg-warning">Not Done</h5>
+                    {% endif %}
+                    {% if todo.is_done %}
+                        <div class="card-body border border-success">
+                    {% else %}
+                        <div class="card-body border border-warning">
+                    {% endif %}
+                    <h5 class="card-title">{{ todo.title }}</h5>
+                    <p class="card-text">{{ todo.description }}</p>
+                    {% if not todo.is_done %}
+                        <a href="{% url 'action todo' todo.id %}" class="btn btn-success">Do It</a>
+                    {% else %}
+                        <a href="{% url 'action todo' todo.id %}" class="btn btn-warning">Reset</a>
+                    {% endif %}
+                    <a href="{% url 'delete view' todo.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center mt-5">
+                <h1>No Todos Yet</h1>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="container border text-center shadow p-3 mb-5 bg-white rounded">
+            <img src='../../static/images/R%20(1).jfif' width="500" class="rounded border border-dark m-5">
+            <div class="card-body m-3">
+                <h1 class="text-secondary">You are Welcome!</h1>
+                If you want to organize your day, be more productive and have more free time for whatever you want?
+                <br>
+                Our TODO website is exactly for You. Create your todos, check them as done or not done, when you don't
+                need them just remove from todo list.
+            </div>
+            <div class="card-body .btn-group-lg">
+                <a href="{% url 'register view' %}" class="btn btn-primary" type="button">Register</a>
+                <a href="{% url 'login view' %}" class="btn btn-primary" type="button">Login</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

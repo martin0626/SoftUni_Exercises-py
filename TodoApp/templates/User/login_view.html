@@ -1,0 +1,18 @@
+{% extends 'Base/Navigation.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center text-black mt-5">Login!</h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 text-black">
+            <form method="post" action="{% url 'login view' %}">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="btn btn-primary mt-2">Login</button>
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+</div>
+{% endblock %}
