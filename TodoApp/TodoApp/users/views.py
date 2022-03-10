@@ -1,46 +1,33 @@
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from TodoApp.users.forms import RegisterForm, LoginForm
 
 
-def register_view(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('my todos')
+class UserRegistrationView(CreateView):
+    form_class = RegisterForm
+    template_name = 'User/register_view.html'
+    success_url = reverse_lazy('my todos')
 
-    else:
-        form = RegisterForm()
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'User/register_view.html', context)
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        login(self.request, self.object)
+        return result
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('my todos')
-    else:
-        form = LoginForm()
+class UserLoginView(LoginView):
+    template_name = 'User/login_view.html'
+    form_class = LoginForm
 
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'User/login_view.html', context)
+    def get_success_url(self):
+        return reverse_lazy('my todos')
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('my todos')
+class UserLogoutView(LogoutView):
+    pass
+
+
+

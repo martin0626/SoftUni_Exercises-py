@@ -1,9 +1,9 @@
 from django.urls import path
 
-from TodoApp.users.views import register_view, login_view, logout_view
+from TodoApp.users.views import UserLoginView, UserRegistrationView, UserLogoutView
 
 urlpatterns = [
-    path('register/', register_view, name='register view'),
-    path('login/', login_view, name='login view'),
-    path('logout/', logout_view, name='logout'),
+    path('register/', UserRegistrationView.as_view(), name='register view'),
+    path('login/', UserLoginView.as_view(), name='login view'),
+    path('logout/', UserLogoutView.as_view(), name='logout'),
 ]
