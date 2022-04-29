@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% get_static_prefix %}css/style.css">
+</head>
+<body>
+<div style="text-align: center">
+    <h1>Hello World!!</h1>
+    <a id="likes">0</a>
+    <button id="btn">Like</button>
+    <div class="box-content" hidden="true">
+        <h1>Test!</h1>
+        <p>asdasd asdasdsad</p>
+        <button style="padding-left: 20px; padding-right: 20px" id="close_detail">Close</button>
+
+    </div>
+    <div style="padding: 50px">
+        <button style="padding-left: 20px; padding-right: 20px" id="show_detail">Show Detail</button>
+    </div>
+
+
+</div>
+</body>
+</html>
+
+<script src="{% get_static_prefix %}js/likes.js"></script>
+<script src="{% get_static_prefix %}js/details.js"></script>
